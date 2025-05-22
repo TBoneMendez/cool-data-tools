@@ -1,0 +1,13 @@
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+
+# Audio/video input files
+input/
+converted/
+output/
+
+# macOS metadata files
+.DS_Store
