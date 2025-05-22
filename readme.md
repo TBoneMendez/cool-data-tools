@@ -13,11 +13,13 @@ A CLI-based tool that:
 - Outputs `.txt`, `.json`, `.srt` and `.vtt` formats
 - Runs 100% locally – no API keys required
 
-### 2. Markdown Converter 📝
-A script for converting:
-- `.txt` or raw content into clean Markdown
-- Adds basic formatting, headers, and bullet points
-- Ideal for turning rough notes into presentable documents
+### Markdown to HTML Converter 📝
+A script that turns local or GitHub-hosted `.md` files into fully rendered HTML.
+- Fetches `.md` files from a GitHub repo or uses local files
+- Converts Markdown to HTML using Jinja2 templates
+- Automatically generates an index page linking all output files
+- Supports Mermaid diagrams
+- Works fully offline after initial setup with GitHub PAT
 
 ## 🔒 Why this repo?
 
