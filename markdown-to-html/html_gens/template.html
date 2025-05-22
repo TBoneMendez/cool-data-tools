@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 1000px; margin: 2em auto; padding: 1em; }
+    pre, code { background: #f8f8f8; padding: 0.2em; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; }
+    h1, h2, h3 { color: #333; }
+    .mermaid { margin: 2em 0; }
+    footer { margin-top: 4em; font-size: 0.9em; color: #666; border-top: 1px solid #ccc; padding-top: 1em; }
+  </style>
+</head>
+<body>
+  <div id="content"></div>
+  <footer>Generated: {{ timestamp }}</footer>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+
+    const rawMarkdown = `{{ markdown | safe }}`;
+    const html = marked.parse(rawMarkdown);
+    document.getElementById("content").innerHTML = html;
+
+    document.querySelectorAll("code.language-mermaid").forEach((block) => {
+      const container = document.createElement("div");
+      container.className = "mermaid";
+      container.innerHTML = block.textContent;
+      block.parentElement.replaceWith(container);
+    });
+
+    mermaid.init();
+  </script>
+</body>
+</html>

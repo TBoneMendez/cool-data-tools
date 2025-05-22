@@ -1,0 +1,19 @@
+
+# Virtual environment
+.venv/
+.env/
+
+# Local environment variables
+.env
+
+# Input and output artifacts
+input/
+output/
+
+# Ignore everything under input/ and output/ folders
+# but keep folders themselves if needed
+!input/.gitkeep
+!output/.gitkeep
+
+# Keep example env file
+!.example.env
