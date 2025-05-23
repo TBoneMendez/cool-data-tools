@@ -58,8 +58,8 @@ This app depends on `ffmpeg` being available on your system for converting and e
 ## 🛠️ Setup
 
 ```bash
-python3.11 -m venv venv
-source venv/bin/activate
+python3.11 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 

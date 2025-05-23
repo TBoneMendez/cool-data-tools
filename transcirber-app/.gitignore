@@ -5,7 +5,8 @@ env/
 .env/
 
 # Audio/video input files
-input/
+input/*
+!input/.gitkeep
 converted/
 output/
 

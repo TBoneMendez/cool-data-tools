@@ -190,26 +190,33 @@ def transcribe_files(files, language=None, model_name="base"):
     for msg in done_messages:
         print(msg)
 
-def split_into_chunks(text, tokenizer, max_tokens=512):
+def split_into_chunks(text, tokenizer, max_tokens=490):
     sentences = re.split(r'(?<=[.!?])\s+', text)
     chunks = []
     current = ""
+
     for sentence in sentences:
         test = current + sentence + " "
-        if len(tokenizer(test).input_ids) < max_tokens:
+        token_count = len(tokenizer.encode(test))
+        if token_count < max_tokens:
             current = test
         else:
-            chunks.append(current.strip())
+            if current:
+                chunks.append(current.strip())
             current = sentence + " "
+
     if current:
         chunks.append(current.strip())
+
     return chunks
+
 
 def translate_text(text, target_lang):
     lang_map = {
-        "no": "Neurora/opus-tatoeba-eng-nor-bt", #Norwegian Bokmål
-        "sv": "Helsinki-NLP/opus-mt-en-sv" #Swedish
+        "no": "Neurora/opus-tatoeba-eng-nor-bt",
+        "sv": "Helsinki-NLP/opus-mt-en-sv"
     }
+
     if target_lang not in lang_map:
         raise ValueError(f"Unsupported target language: {target_lang}")
 
@@ -219,11 +226,17 @@ def translate_text(text, target_lang):
 
     chunks = split_into_chunks(text, tokenizer)
     translated_chunks = []
-    for chunk in chunks:
-        inputs = tokenizer(chunk, return_tensors="pt", padding=True, truncation=True)
-        translated = model.generate(**inputs)
-        translated_text = tokenizer.decode(translated[0], skip_special_tokens=True)
-        translated_chunks.append(translated_text)
+
+    for idx, chunk in enumerate(chunks):
+        token_count = len(tokenizer.encode(chunk))
+        if token_count > 490:
+            print(f"⚠️ Skipping chunk {idx} – still too long: {token_count} tokens")
+            continue
+
+        encoded = tokenizer(chunk, return_tensors="pt")
+        output = model.generate(**encoded)
+        decoded = tokenizer.decode(output[0], skip_special_tokens=True)
+        translated_chunks.append(decoded)
 
     return " ".join(translated_chunks)
 
