@@ -1,0 +1,6 @@
+# macOS metadata files
+.DS_Store
+
+# Random files
+start vscode.bat
+git commands.txt
