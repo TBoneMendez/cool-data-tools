@@ -1,0 +1,9 @@
+sweetviz>=2.3
+pandas>=2.1
+snowflake-connector-python>=3.10
+python-dotenv>=1.0
+pyarrow>=16
+chardet>=5.2
+setuptools<81
+wheel
+numpy<2.0
